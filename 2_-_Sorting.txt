@@ -1,0 +1,63 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-08-22T10:59:10-05:00
+
+====== 2 - Sorting ======
+Created Thursday 22 August 2019
+
+== Insertion sort ==
+
+Psuedo code'':''
+
+''for j = 2 to A.length''
+''	key = A[j]''
+''	// Insert A[j] into the sorted sequence A[1 ... j - 1].''
+''	i = j - 1''
+''	while i > 0 and A[i]  > key''
+''		A[i+1] = A[i] ''
+''		i = i + 1''
+''	A[i+1] = key''
+
+NOTE in psuedo code, arrays start at 1, loop variables retain value after exiting the loop - they are local, but have function-level scope (I believe)
+
+It's an algorithm with O(n^2) [yikes], but is pretty good for small data sets or almost sorted data sets
+It's also in-place, which is nice, and non-volatile (don't remember the exact term)
+
+Book proves it's correct & terminant via loop invariants
+
+==== Loop Invariants ====
+**Initialization:** it is true prior to the first iteration of the loop
+**Maintenance:** If it is true before an iteration of the loop, it remains true before the next iteration
+**Termination:** When the loop terminates, the invariant gives us a useful property that helps to show the algorithm is correct
+
+Similar to mathematical induction - base case, then an inductive step
+can also use some other thing beyond the loop invariant itself to prove steps 1&2
+
+For insertion sort:
+
+Initialization:
+* Show the loop invariant holds before the first iteration, when j = 2
+* The subarray A[1 ... j - 1] is therefore just A[1], the first element, which is trivially sorted
+Maintenance:
+* Show the iteration maintains the loop invariant
+* Informally, the //for// loop moves A[j-1], A[j-2], ... one position to the right until it finds the correct [sorted] position for A[j], at which point it inserts the value of A[j]
+* The subarray A[1, ... j] then consists of the elements originally in A[1, ... j], but in sorted order
+* Incrementing j for the next iteration thus preserves the loop invariant
+* Formal analysis requires stating and showing a full loop invariant of the //while// loop here, but we don't want to get bogged down in that
+Termination:
+* The condition causing the //for// loop to terminate is that j > A.length = n
+* At that time, j = n + 1
+* Therefore the subarray A[1...n] consists of the elements originally in A[1...n] but in sorted order.
+* Because A[1...n] is the entire array, the entire array is sorted and thus the algorithm is correct
+
+
+==== Merge Sort ====
+* Divide-and-conquer philosophy / strategy 
+
+A few different ways to do this; general top-down strategy:
+''algorithm MergeSort(A):''
+	''B = copy(A)''
+	''sort(A, 0, A.length, B)''
+
+
+

@@ -1,0 +1,51 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-08-20T10:44:04-05:00
+
+====== 1 - Algorithms ======
+Created Tuesday 20 August 2019
+
+* Algorigthms are at the heart of computing
+* Algorithms:
+	* A sequence of computational (computing) steps that transform **input** into **output**
+	* Finite description
+	* infinite set of inputs
+	* example: sorting
+	* Need to prove:
+		* Termination: algorithms should stop at some point
+		* Correctness
+		* Effeciency
+		* size of the problem (bit size)
+
+* Computational thinking
+
+* Types of problems		— hamming weight
+	1. Decision: yes / no
+	2. Search problem
+	3. Counting problem
+	4. Optimization problem
+
+* Areas (course will cover)
+	* Computation geometry 		-> Graphics + gaming
+	* Numerical algorithm  		-> Applied math
+	* Computational number theory	-> Cryptography / security
+	* Computer algebra		-> Error correcting code
+		* symbolic
+	* Graph algorithm		-> Navigation, internet, etc
+	* Sorting			-> Database, data mining, etc
+	* Learning algorithm		-> A.I
+
+
+Input -> Algorithm -> Output
+			^
+			|
+			Randomness (sometimes)
+
+
+1. ?
+2. Parallel
+3. Randomized
+4. Approximation (ie NP-complete, eg TSP)
+P != NP
+
+

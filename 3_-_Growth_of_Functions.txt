@@ -1,0 +1,18 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-09-05T10:34:32-05:00
+
+====== 3 - Growth of Functions ======
+Created Thursday 05 September 2019
+
+a = O(b) : a ≥ b
+a = Θ(b) : a = b
+a = Ω(b) : a ≤ b
+a = o(b) : a > b
+a = ω(b) : a < b
+
+
+
+
+Math Identities:
+see pg 54 in the book

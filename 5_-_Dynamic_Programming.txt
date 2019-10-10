@@ -1,0 +1,17 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-10T10:37:09-05:00
+
+====== 5 - Dynamic Programming ======
+Created Thursday 10 October 2019
+
+eg: Fibonacci Number
+
+{{{code: lang="python" linenumbers="True"
+def A(n):
+	if n == 1 or n == 2:
+		return 1
+	else:
+		return A(n-1) + A(n-2)
+}}}
+

@@ -1,0 +1,11 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-09-05T10:38:00-05:00
+
+====== 4 - Divide and Conquer ======
+Created Thursday 05 September 2019
+
+**Divide** the problem into a number of subproblems that are smaller instances of the same problem
+**Conquer** the subproblems via recursion. If the problem is small enough, solve straightforwardly
+**Combine** the solutions of the subproblems into the solution for the original problem
+
