@@ -5,8 +5,7 @@ Creation-Date: 2019-10-10T10:37:09-05:00
 ====== 5 - Dynamic Programming ======
 Created Thursday 10 October 2019
 
-eg: Fibonacci Number
-
+== Fibonacci Number ==
 {{{code: lang="python" linenumbers="True"
 def A(n):
 	if n == 1 or n == 2:
@@ -15,3 +14,105 @@ def A(n):
 		return A(n-1) + A(n-2)
 }}}
 
+T(n) = T(n-1) + T(n-2) + c
+		 c			
+	c		c		height: n (really, n/2 and n)	
+	 c	   c        c     c	
+
+=> Ω (2^{n/2})
+
+We can also use a loop, instead of recursion.
+{{{code: lang="python" linenumbers="True"
+def A(n):
+	if n == 1 or n ==2:
+		return 1
+	else:
+		S[1] = 1
+		S[2] = 2
+		for i == 3 to n:
+			S[i] = S[i - 1] + S[i -2]
+	return S[n]
+}}}
+
+
+I think I messed up this equation, I zoned out
+{{.\equation.png?type=equation}}
+
+====== Matrix Chain Multiplication ======
+
+A_{1}A_{2 }. . . A_{N}
+(p*q)(q*r)(...)
+The final dimmensions will be the first dimmension of A_{1} and the final dimmension of A_{N}.
+
+eg:
+A1 = 10x100
+A2 = 100x5
+A3 = 5x50
+result = 10x50
+
+Can do this in two different orders:
+(A1*A2)*A3
+10*100*5 (for A1*A2)+ 10*5*50 (for A_{12}*A3)
+= 5000+2500 = 7500
+vs:
+(A1*(A2*A3))
+100*5*50 + 10*100*50
+= 2500+50000
+= 75000
+
+=== Parenthesize the expression ===
+P(n) = # of parenthesization of n matrices
+| Parenthesis | Number of options                              | Example        |
+|-------------|------------------------------------------------|----------------|
+| P(1)        | 1                                              | A1             |
+| P(2)        | 1                                              | A1*A2          |
+| P(3)        | 2                                              | A1(A2*A3)      |
+| P(4)        | P(1)P(3) + P(2)P(2) + P(3)P(1) = 5             | (A1*A2)(A3*A4) |
+| P(5)        | P(1)P(4) + P(2)P(3) + P(3)P(2) + P(4)P(1) = 14 |                |
+
+
+=== Catalan Number ===
+The number of possible options for n matrices is:
+{{.\equation001.png?type=equation}}
+
+==== Solution ====
+
+=== Structure of optimal parenthesization ===
+We wish to parenthesize the 'prefix' subchain A_{i} A_{i+1} ... A_{k} * A_{j} with the optimal parenthseization of the subchain.
+That is, the optimal way to multiply A_{i}..._{k}*A_{j} involves knowing the opitmal way to multiply A_{i} ... A_{k}
+As such, we must simply find the optimal value of k (the optimal place to split the problem), then recursively solve the sub-problems
+
+=== Recursive solution ===
+Let m(i,j) be the minimum number of scalar multiplications needed to compute the matrix A_{i. ... j}
+If i = j, then there is only one matrix, so we're done. Therefore, m(i,i) = 0 for i = 1,2,...,n
+In general,
+m[i,j] = m[i,k] + m[k+1, j] + p_{i-1}p_{k}p_{j }
+where p represents a matrice's size, eg A_{i} is p_{i-1}*p_{i}
+
+=== Compute the optimal cost ===
+
+{{{code: lang="python" linenumbers="True"
+def Matrix_Chain_Order(p):
+	n = p.length - 1
+	let m[1..n, 1..n] and s[1..n-1, 2..n] be new tables
+	for i = 1 to n:
+		m[i,i] = 0
+	for l = 2 to n:		# l is the chain length
+		for i = 1 to n - l + 1:
+			j = i + l - 1
+			m[i,j] = infinity
+			for k = i to j - 1:
+				q = m[i,k] + m[k+1, j] + p_i-1*p_k*p_j
+				if q < m[i,j]
+					m[i,j] = q
+					s[i,j] = k
+	return m and s
+}}}
+
+
+{{.\Capture.PNG?width=700}}
+
+====== Characteristics of D.P. ======
+1. Optimized substructure
+	a. Solutions to a sub-problem can be used to compute the a 'larger' problem
+2. Overlapping subproblems

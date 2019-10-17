@@ -1,0 +1,72 @@
+Content-Type: text/x-zim-wiki
+Wiki-Format: zim 0.4
+Creation-Date: 2019-10-17T10:54:26-05:00
+
+====== 6 - Greedy Algorithms ======
+Created Thursday 17 October 2019
+
+For many optimization problems, dynamic programming is overkill. A **Greedy Algorithm** always makes the choice that looks best //at that moment//. It makes a locally optimal choice, hoping that will lead it to a globally optimal solution. For many problems, this works, but it doesn't always.
+
+== Steps ==
+1. Cast the optimization problem as one in which we make a choice and are left with one subproblem to solve
+2. Prove that there is always an optimal solution to the original problem that makes the greedy choice, so that the greedy cjoice is always save
+3. Demonstrate optimal substructure by showing that, having made the greedy choice, what remains is a subproblem with the property that if we combine an optimal solution to the subproblem with the greedy choice we have made, we arrive at an optimal solution to the original problem.
+
+==== Huffman Codes ====
+We wish to compress text into something smaller. Huffman codes allow us to compress data from around 20% to 90%, depending on what is being compressed.
+Huffman's greedy algo uses a table storing how often each character occurs (it's frequency) to build up an optimal way of representing each character as a binary string.
+In standard ASCII text, each letter has a fixed-length code, eg, an 'a' has the same length as 'z'. This is ineffecient, because there may be many more 'a's than 'z's, so if we are somehow able to tradeoff having a small length for 'a' for a long length for 'z', we will have a much smaller overall file size.
+As such, we use variable-length codes.
+Imagine we have the string 'abababc'
+Using fixed-length codes with 2 bits per character (which can represent 2^2 = 4 possible characters), this string can be represented as:
+00 01 00 01 00 01 10
+But if instead represent the string like this:
+a = 0
+b = 10
+c = 11
+we have:
+0 10 0 10 0 10 11
+Which is better.
+
+== Prefix codes ==
+A code is a prefix code if no codeword (ie unique bit representation) is also a prefix of some other codeword.
+* prefix-free codes
+This can achieve optimal data compression among any character code (eg codes that compress by character)
+Encoding is simple: concatenate the codewords together. Because no codeword is a prefix of any other, we can easily read back the string, eg if a, b, and c are encoded as above, then:
+10011 = b a c
+But it 100 was allowed to be a codeword, we would have abiguity, because b (10) is a prefix of 100.
+Simlarly, if c = 01, then 010 is abigious  - it could be ab or ca
+We can visualize prefix codes as binary trees:
+{{.\prefix-code-tree.PNG?width=400}}
+	Leaves are letters with their frequencies, internal nodes are the sum of the frequencies of the leaves. (a) Represents the fixed length code and (b) represents the variable-length code. 
+An optimal code is a full binary tree, in which every non-leaf node has two children. Note that the fixed-length code is not optimal
+
+Let //C// be the alphabet of characters, then the tree for an optimal prefix code has exactly |//C|// leaves, and |//C//|-1 internal nodes.
+Now, let c \in C, and c.freq be the frequency of a char in a file, and d_{Τ }(c) be the depth of c's leaf in the tree.
+Then d_{Τ }(c) is the length of the codeword for c.
+Then the number of bits required to encode the file is:
+{{.\equation.png?type=equation}}
+which we define as the cost of the tree T
+
+== Psuedo Code ==
+Let Q be a minimum priority queue that we are building, where extract-min finds the minimum and pops it
+Huffman(C):
+{{{code: lang="java" linenumbers="True"
+n = |C|
+Q = C
+for i = 1 to n - 1
+	allocate a new node z
+	z.left = x = EXTRACT-MIN(Q)
+	z.right = y = EXTRACT-MIN(Q)
+	z.freq = x.freq + y.freq
+	INSERT(Q, z)
+return EXTRACT-MIN(Q) // return the root of the tree
+}}}
+
+
+The psuedo code builds the queue from the 'bottom' up, that is, at each step, we merge the two trees with the lowest frequency.
+{{.\psuedo-code-walkthrough.PNG?width=500}}
+
+== Analysis ==
+**Correctness:**
+
